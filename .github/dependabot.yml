@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # Application dependencies. Group low-risk bumps into a few PRs to cut noise; majors come alone.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      prod-minor-patch:
+        dependency-type: production
+        update-types: [minor, patch]
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  # Keep the SHA-pinned CI actions current: Dependabot bumps the pin + the version comment together.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: ["*"]

@@ -1,0 +1,125 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege for GITHUB_TOKEN: this workflow only reads the repo.
+permissions:
+  contents: read
+
+# Don't pile up runs: a newer push to the same ref cancels the older in-flight one.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VISION_PROVIDER: mock # keyless, deterministic — no secrets, no cloud calls in CI
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Supply-chain gate (threat model A03): fail on a high/critical advisory in any dep.
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+      - run: pnpm lint
+      - run: pnpm format:check
+      - run: pnpm typecheck
+      # Unit/component/adapter tests + the core coverage gate (lib/matching + lib/ttb thresholds).
+      - name: Test with core coverage gate
+        run: pnpm test:coverage
+      - run: pnpm build
+      # Boot the PRODUCTION build (`next start`) and confirm the key pages render — catches prod-only
+      # breakage the dev-mode e2e can't. Unset VISION_PROVIDER so it starts like a real keyless deploy
+      # (the app forbids the mock tier under NODE_ENV=production); we only fetch pages, not /api/verify.
+      # Uses port 3210, NOT the e2e port 3111: `next start` spawns a child that outlives `kill $SRV`,
+      # so a separate port guarantees no collision with the e2e web server (reuseExistingServer=false).
+      - name: Production boot smoke
+        env:
+          VISION_PROVIDER: ""
+        run: |
+          pnpm start --port 3210 &
+          SRV=$!
+          ready=0
+          for _ in $(seq 1 30); do
+            if [ "$(curl -s -o /dev/null -m 2 -w '%{http_code}' http://localhost:3210/ || echo 000)" = "200" ]; then
+              ready=1; break
+            fi
+            sleep 1
+          done
+          fail=0
+          [ "$ready" = "1" ] || { echo "prod server never became ready"; fail=1; }
+          for path in / /batch; do
+            code=$(curl -s -o /dev/null -m 5 -w '%{http_code}' "http://localhost:3210$path" || echo 000)
+            echo "GET $path -> $code"
+            [ "$code" = "200" ] || fail=1
+          done
+          kill "$SRV" 2>/dev/null || true
+          exit $fail
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+      # Behavioral smoke: runs against `next dev` + mock tier (deterministic) — see playwright.config.ts.
+      - run: pnpm e2e
+      # Accuracy gate: mock tier must score 100% and catch every planted violation (eval/run.ts exits 1 otherwise).
+      - run: pnpm eval --provider mock
+      # Accuracy FLOOR (D6a, 2026-07-25): the mock gate above is near-tautological — its fixtures are
+      # authored to match expected.json, so it proves the matcher, not accuracy. This is CI's first
+      # non-tautological accuracy gate: local-ocr on the real-world set, keyless and deterministic.
+      # Measured 22/46 (a corrected-comment re-verification found an earlier "7/46, 8/46 measured"
+      # note here was wrong — scoring DOES credit a tolerant NEEDS_CORRECTION as correct, per the
+      # eval output's "[tolerant: NEEDS_CORRECTION accepted]" rows; the true score reproduces at
+      # exactly 23/46 across multiple independent runs). Floor set to 22 (one below the reproducible
+      # value) so it still catches a genuine regression without being brittle to a single-label
+      # flip. History shows genuine 0/46 collapses from broken commits, which this catches.
+      # Re-measure and raise it whenever OCR accuracy work lands — a floor that never moves stops
+      # being informative.
+      - run: pnpm eval --set real-world --provider local-ocr --min-overall 22
+      # Security gate: planted injections in label artwork must not move any verdict toward passing.
+      # Runs on local-ocr (a REAL extractor, keyless) rather than the fixture tier. This is a
+      # pipeline regression gate; the model-following result is the recorded Bedrock run (see
+      # eval/history.jsonl and the README security section).
+      - run: pnpm eval:adversarial
+      # Latency gate: the keyless default tier must stay inside the < 5 s product budget (p95) and
+      # must never reach the route's 8 s hard timeout (max) on REAL photographs. Runs local-ocr only
+      # — no API key, no secrets, same posture as the mock accuracy gate above; the cloud tiers stay
+      # a manual pre-deploy check.
+      #
+      # This gate exists because a real breach hid for two days: check-latency measured only the 13
+      # small synthetic samples, and its verdict read p95 alone while printing an over-budget max
+      # (7136 ms) beside the word PASS. Real photographs are the worst case a reviewer actually hits.
+      # See docs/superpowers/specs/2026-07-25-local-ocr-latency-and-language-packs-design.md.
+      - run: pnpm check-latency --provider local-ocr --set real-world
+      # Ship the trace/screenshot/report when the e2e smoke fails, so failures are debuggable.
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+
+  dependency-review:
+    # Only runs on PRs — diffs the dependency graph between the PR branch and main, fails if a
+    # high/critical advisory or a denied license is introduced. Requires the Dependency Graph
+    # enabled (free on public repos, needs GHAS on private).
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
