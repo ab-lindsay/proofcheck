@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Home from "@/app/page";
+import { setDevMode } from "@/hooks/use-dev-mode";
 
 const VERIFY_RESULT = {
   overall: "APPROVED",
@@ -51,16 +52,32 @@ describe("Home (single-label verify page)", () => {
   });
   afterEach(() => {
     vi.restoreAllMocks();
+    setDevMode(false);
   });
 
-  it("renders a sample button for every bundled sample", () => {
+  it("renders a sample button for every non-advanced (brand-named, clean) sample by default", () => {
     global.fetch = makeFetchMock();
     render(<Home />);
     expect(screen.getByRole("button", { name: /Old Tom Distillery/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Ridge Creek/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Harbor Point/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Kirkbride Cellars/ })).toBeInTheDocument();
+    // "Advanced" samples (named after the defect they demonstrate, e.g. "Title-case warning") read
+    // as confusing to a first-time, non-technical user — a usability test confirmed it — so they're
+    // hidden from the default gallery and only surface once Dev mode is on.
+    expect(screen.queryByRole("button", { name: /Title-case warning/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Bad photo \(glare\)/ })).not.toBeInTheDocument();
+  });
+
+  it("reveals the advanced (defect-demonstrating) samples once Dev mode is on", () => {
+    setDevMode(true);
+    global.fetch = makeFetchMock();
+    render(<Home />);
     expect(screen.getByRole("button", { name: /Title-case warning/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Wrong class\/type/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Bad photo \(glare\)/ })).toBeInTheDocument();
+    // The everyday clean samples stay visible too — Dev mode adds, it doesn't replace.
+    expect(screen.getByRole("button", { name: /Old Tom Distillery/ })).toBeInTheDocument();
   });
 
   it("loadSample success: loads the file, prefills the form (remounted, not merely defaulted), and enables submit", async () => {
@@ -120,6 +137,7 @@ describe("Home (single-label verify page)", () => {
   });
 
   it("a `real: true` sample (bad photo) verifies as a real upload, never as a mock-tier sample", async () => {
+    setDevMode(true); // this sample is `advanced`, hidden from the default gallery
     const fetchMock = makeFetchMock();
     global.fetch = fetchMock;
     render(<Home />);

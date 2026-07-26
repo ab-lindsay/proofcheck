@@ -422,6 +422,11 @@ describe("POST /api/verify", () => {
     });
     it("a production request with NONE of the three dev fields is unaffected by the gate", async () => {
       vi.stubEnv("NODE_ENV", "production");
+      // Isolate from CI's job-level VISION_PROVIDER=mock (set for every OTHER test's determinism):
+      // combined with NODE_ENV=production it would trip the separate "VISION_PROVIDER=mock forbidden
+      // in production" guard (lib/vision/select.ts) this test has nothing to do with — a real
+      // production deploy never sets VISION_PROVIDER, so clearing it here matches reality.
+      vi.stubEnv("VISION_PROVIDER", "");
       vi.stubEnv("GEMINI_API_KEY", "");
       vi.stubEnv("ANTHROPIC_API_KEY", "");
       vi.stubEnv("OPENAI_API_KEY", "");

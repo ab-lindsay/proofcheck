@@ -109,6 +109,7 @@ export function BatchTable({ items, files }: { items: BatchItem[]; files?: Map<s
                 it.status === "done" && it.result
                   ? it.result.fields.filter((f) => f.verdict !== "COMPLIANT").length
                   : 0;
+              const issueWord = issueCount === 1 ? "issue" : "issues";
               return (
                 <tr key={it.filename} className="border-b border-border align-top last:border-b-0">
                   <td className="px-5 py-4 font-mono text-sm break-all text-foreground sm:px-6">{it.filename}</td>
@@ -127,12 +128,12 @@ export function BatchTable({ items, files }: { items: BatchItem[]; files?: Map<s
                           aria-label={
                             open
                               ? `Hide details for ${it.filename}`
-                              : `View details for ${it.filename} (${issueCount} issues)`
+                              : `View details for ${it.filename} (${issueCount} ${issueWord})`
                           }
                           className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
                           onClick={() => setOpenRow(open ? null : it.filename)}
                         >
-                          {open ? "Hide details" : `View details (${issueCount} issues)`}
+                          {open ? "Hide details" : `View details (${issueCount} ${issueWord})`}
                         </button>
                         {open ? (
                           <div id={detailsId} className="mt-3 max-w-2xl">

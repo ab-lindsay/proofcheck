@@ -4,6 +4,7 @@ import { ClipboardCheck, Loader2, Sparkles } from "lucide-react";
 import type { ApplicationData } from "@/lib/schema";
 import { SAMPLES, type Sample } from "@/lib/samples";
 import { useVerify } from "@/hooks/use-verify";
+import { useDevMode } from "@/hooks/use-dev-mode";
 import { ApplicationForm } from "@/components/application-form";
 import { UploadZone } from "@/components/upload-zone";
 import { VerdictCard } from "@/components/verdict-card";
@@ -34,6 +35,12 @@ export default function Home() {
   // over — label B would show "helpful" marks the user only ever gave to label A.
   const [runId, setRunId] = useState(0);
   const { loading, result, error, verify, reset } = useVerify();
+  const devMode = useDevMode();
+  // "Advanced" samples are named after the defect they demonstrate (e.g. "Title-case warning"),
+  // which reads as confusing next to the brand-named ones in a first-time user's gallery — a
+  // usability test confirmed it. Dev mode reveals them for anyone exploring how ProofCheck catches
+  // a mistake, without cluttering the default, non-technical-user-facing view.
+  const visibleSamples = devMode ? SAMPLES : SAMPLES.filter((s) => !s.advanced);
 
   // A user-provided file always goes through real extraction (never the mock tier).
   const onUpload = (f: File | null) => {
@@ -98,7 +105,7 @@ export default function Home() {
                 <strong>Verify label</strong> straight away.
               </p>
               <div className="flex flex-wrap gap-2">
-                {SAMPLES.map((sample) => (
+                {visibleSamples.map((sample) => (
                   <button
                     key={sample.name}
                     type="button"

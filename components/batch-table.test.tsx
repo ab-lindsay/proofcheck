@@ -130,7 +130,7 @@ describe("BatchTable row expand/collapse", () => {
     const items: BatchItem[] = [{ filename: "fail.png", status: "done", result: failResult() }];
     render(<BatchTable items={items} />);
 
-    const toggle = screen.getByRole("button", { name: /view details for fail\.png \(1 issues\)/i });
+    const toggle = screen.getByRole("button", { name: /view details for fail\.png \(1 issue\)/i });
     expect(toggle).toHaveAttribute("aria-expanded", "false");
     const detailsId = toggle.getAttribute("aria-controls");
     expect(detailsId).toBeTruthy();
@@ -143,7 +143,7 @@ describe("BatchTable row expand/collapse", () => {
     expect(screen.getByText("Does not match the application.")).toBeInTheDocument();
 
     fireEvent.click(hideButton);
-    expect(screen.getByRole("button", { name: /view details for fail\.png \(1 issues\)/i })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: /view details for fail\.png \(1 issue\)/i })).toHaveAttribute(
       "aria-expanded",
       "false",
     );
@@ -175,6 +175,23 @@ describe("BatchTable row expand/collapse", () => {
     render(<BatchTable items={items} />);
     expect(screen.queryByRole("button", { name: /view details/i })).not.toBeInTheDocument();
     expect(screen.getByText("extraction failed")).toBeInTheDocument();
+  });
+});
+
+describe("BatchTable issue-count grammar", () => {
+  it("uses singular 'issue' for exactly one problem, plural for zero or more than one", () => {
+    const twoIssues = failResult();
+    twoIssues.fields.push({ ...twoIssues.fields[0], field: "brandName" });
+    const items: BatchItem[] = [
+      { filename: "one.png", status: "done", result: failResult() },
+      { filename: "two.png", status: "done", result: twoIssues },
+      { filename: "zero.png", status: "done", result: passResult() },
+    ];
+    render(<BatchTable items={items} />);
+
+    expect(screen.getByRole("button", { name: /view details for one\.png \(1 issue\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /view details for two\.png \(2 issues\)/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /view details for zero\.png \(0 issues\)/i })).toBeInTheDocument();
   });
 });
 

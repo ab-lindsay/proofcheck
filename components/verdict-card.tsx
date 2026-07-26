@@ -122,7 +122,7 @@ export function VerdictCard({ result, image }: { result: VerifyResponse; image?:
         {devMode && result.extraction ? <ExtractionTrail trace={result.extraction} /> : null}
 
         <p className="mt-5 border-t border-border pt-3 text-right text-sm text-muted-foreground">
-          Checked in {(result.processingMs / 1000).toFixed(1)} s
+          Checked in {result.processingMs < 100 ? "< 0.1" : (result.processingMs / 1000).toFixed(1)} s
         </p>
         {/* Tier/provider is internal jargon to a non-technical user — keep it dev-mode-only, but
             gated on devMode alone, not result.extraction: escalation is off by default, so most

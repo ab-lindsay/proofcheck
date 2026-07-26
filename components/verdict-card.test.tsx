@@ -41,6 +41,12 @@ describe("VerdictCard", () => {
     expect(screen.getByText(/0\.8\s?s/)).toBeInTheDocument();
     expect(screen.getByText("Health warning statement")).toBeInTheDocument();
   });
+  it('shows "< 0.1 s" instead of a misleading "0.0 s" for near-instant (mock-tier) results', () => {
+    render(<VerdictCard result={{ ...result, processingMs: 4 }} />);
+    expect(screen.getByText("Checked in < 0.1 s")).toBeInTheDocument();
+    expect(screen.queryByText(/checked in 0\.0 s/i)).not.toBeInTheDocument();
+  });
+
   it("threads beverageType into per-field citations: distilled-spirits alcohol content links §5.65", () => {
     const spirits: VerifyResponse = {
       ...result,

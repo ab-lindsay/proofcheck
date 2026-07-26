@@ -76,6 +76,31 @@ describe("BatchPage", () => {
     expect(runButton()).toHaveTextContent("Verify batch (0 labels)");
   });
 
+  it("announces CSV errors to screen readers via role=alert, unlike the equivalent single-label error", async () => {
+    render(<BatchPage />);
+    fireEvent.change(getCsvInput(), {
+      target: { files: [csvFile("apps.csv", ["a.png,cider,X,Y,,750 mL,,"])] },
+    });
+
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("CSV problems"));
+  });
+
+  it("wraps the results table in an aria-live region so batch progress is announced", async () => {
+    global.fetch = vi.fn(async () => ({ ok: true, json: async () => VERIFY_RESULT })) as unknown as typeof fetch;
+
+    render(<BatchPage />);
+    fireEvent.change(getCsvInput(), {
+      target: { files: [csvFile("apps.csv", ["a.png,distilled-spirits,OLD TOM,Bourbon,45% Alc./Vol.,750 mL,,"])] },
+    });
+    await waitFor(() => expect(runButton()).toHaveTextContent("Verify batch (1 labels)"));
+    fireEvent.change(getImagesInput(), { target: { files: [imageFile("a.png")] } });
+    await waitFor(() => expect(runButton()).toBeEnabled());
+    fireEvent.click(runButton());
+
+    await waitFor(() => expect(screen.getByText("Results (1)")).toBeInTheDocument());
+    expect(screen.getByText("Results (1)").closest('[aria-live="polite"]')).not.toBeNull();
+  });
+
   it("images multi-select populates files (reflected via the unmatched-images memo)", async () => {
     render(<BatchPage />);
     fireEvent.change(getCsvInput(), {

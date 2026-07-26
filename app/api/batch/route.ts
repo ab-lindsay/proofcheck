@@ -300,13 +300,6 @@ export async function POST(req: Request) {
   const requestStart = Date.now();
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  const limit = rateLimit(ip);
-  if (!limit.ok) {
-    return NextResponse.json(
-      { error: "Rate limit exceeded" },
-      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
-    );
-  }
 
   const rawLength = req.headers.get("content-length");
   if (rawLength === null) {
@@ -347,6 +340,17 @@ export async function POST(req: Request) {
   }
   if (images.length > MAX_BATCH_SIZE) {
     return bad(`Batch size exceeds limit — at most ${MAX_BATCH_SIZE} images allowed.`);
+  }
+
+  // Cost is images.length, not 1: each image is an independent extraction, so a 50-image request
+  // must consume as much budget as 50 single-image /api/verify calls would — otherwise one rate-limit
+  // token buys up to MAX_BATCH_SIZE times the extraction budget of a single verify request.
+  const limit = rateLimit(ip, {}, images.length);
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: "Rate limit exceeded" },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
+    );
   }
 
   let applications: unknown[];

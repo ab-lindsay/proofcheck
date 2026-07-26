@@ -32,6 +32,28 @@ describe("UploadZone file size validation", () => {
   });
 });
 
+describe("UploadZone touch target sizing", () => {
+  beforeEach(() => {
+    URL.createObjectURL = vi.fn(() => "blob:mock") as typeof URL.createObjectURL;
+    URL.revokeObjectURL = vi.fn() as typeof URL.revokeObjectURL;
+  });
+  afterEach(() => vi.restoreAllMocks());
+
+  it("gives 'Choose a file' a real 44px-minimum touch target, not bare underlined text", () => {
+    const { getByRole } = render(<UploadZone file={null} onFile={() => {}} />);
+    expect(getByRole("button", { name: "Choose a file" }).className).toMatch(/min-h-11/);
+  });
+
+  it("gives 'Remove image' a real 44px-minimum touch target once a file is selected", () => {
+    const { container, getByRole } = render(<UploadZone file={null} onFile={() => {}} />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    fireEvent.change(input, {
+      target: { files: [new File([new Uint8Array([1, 2, 3])], "x.png", { type: "image/png" })] },
+    });
+    expect(getByRole("button", { name: "Remove image" }).className).toMatch(/min-h-11/);
+  });
+});
+
 describe("UploadZone camera capture", () => {
   beforeEach(() => {
     URL.createObjectURL = vi.fn(() => "blob:mock") as typeof URL.createObjectURL;

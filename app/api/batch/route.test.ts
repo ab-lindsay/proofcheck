@@ -408,6 +408,11 @@ describe("POST /api/batch", () => {
     // verify route's gate anyway (see the comment at the gate site in app/api/batch/route.ts).
     it("a production request with NONE of the three dev fields is unaffected by the gate", async () => {
       vi.stubEnv("NODE_ENV", "production");
+      // Isolate from CI's job-level VISION_PROVIDER=mock (set for every OTHER test's determinism):
+      // combined with NODE_ENV=production it would trip the separate "VISION_PROVIDER=mock forbidden
+      // in production" guard (lib/vision/select.ts) this test has nothing to do with — a real
+      // production deploy never sets VISION_PROVIDER, so clearing it here matches reality.
+      vi.stubEnv("VISION_PROVIDER", "");
       const res = await POST(request({ files: [{ bytes: OLD_TOM }], source: "sample" }));
       expect(res.status).toBe(200);
       expect((await res.json()).results[0].error).toBeUndefined();
@@ -425,6 +430,26 @@ describe("POST /api/batch", () => {
     expect(res!.status).toBe(429);
     expect(res!.headers.get("Retry-After")).toBeTruthy();
     expect((await res!.json()).error).toMatch(/rate limit/i);
+  });
+
+  // Cost-amplification fix: a single request can carry up to MAX_BATCH_SIZE (50) images, each an
+  // independent extraction — a bare rateLimit(ip) call only ever consumed 1 slot regardless, so one
+  // rate-limit token bought up to 50x the extraction budget of a single /api/verify request. This
+  // proves two 30-image batches (60 images total, the default max) exhaust the shared budget, where
+  // pre-fix behavior would have consumed only 2 of 60 slots for the same 60 images.
+  it("weights the rate limit by image count, so N images in one request cost N (not 1)", async () => {
+    vi.stubEnv("TRUST_PROXY_HEADERS", "1");
+    const ip = "203.0.113.50"; // dedicated IP, unshared with the other rate-limit tests
+    const thirtyImages = Array.from({ length: 30 }, (_, i) => ({ name: `img-${i}.png`, bytes: TRUNCATED_PNG }));
+
+    const first = await POST(request({ files: thirtyImages, ip }));
+    expect(first.status).toBe(200); // 30 of 60 consumed
+
+    const second = await POST(request({ files: thirtyImages, ip }));
+    expect(second.status).toBe(200); // 60 of 60 consumed — exactly exhausts the budget
+
+    const third = await POST(request({ files: [{}], ip })); // just 1 more image
+    expect(third.status).toBe(429);
   });
 
   // Opt-in: TRUST_PROXY_HEADERS=1 is for deployments that know their upstream proxy sets

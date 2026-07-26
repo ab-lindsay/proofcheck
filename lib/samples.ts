@@ -6,6 +6,10 @@ export interface Sample {
   tag: string;
   app: ApplicationData;
   real?: boolean;
+  /** Demonstrates a specific problem (wrong field, bad photo) rather than a clean label. Named after
+   *  the defect it shows, not a brand — confusing in the default gallery for a first-time user (a
+   *  usability test confirmed it), so the single-label page hides these unless Dev mode is on. */
+  advanced?: boolean;
 }
 
 // Bundled demo samples (served from /public/samples), spanning all three beverage types. Selecting one
@@ -83,6 +87,7 @@ export const SAMPLES: Sample[] = [
     name: "title-case-warning.png",
     label: "Title-case warning",
     tag: "Spirits · fails",
+    advanced: true,
     app: {
       beverageType: "distilled-spirits",
       brandName: "OLD TOM DISTILLERY",
@@ -97,6 +102,7 @@ export const SAMPLES: Sample[] = [
     name: "wrong-class-type.png",
     label: "Wrong class/type",
     tag: "Spirits · fails",
+    advanced: true,
     app: {
       beverageType: "distilled-spirits",
       brandName: "CASCADE VALLEY",
@@ -111,6 +117,7 @@ export const SAMPLES: Sample[] = [
     name: "wrong-net-contents.png",
     label: "Wrong net contents",
     tag: "Spirits · fails",
+    advanced: true,
     app: {
       beverageType: "distilled-spirits",
       brandName: "PACIFIC SHORE",
@@ -125,6 +132,7 @@ export const SAMPLES: Sample[] = [
     name: "missing-name-and-address.png",
     label: "Missing name/address",
     tag: "Spirits · review",
+    advanced: true,
     app: {
       beverageType: "distilled-spirits",
       brandName: "SUMMIT PEAK",
@@ -140,6 +148,7 @@ export const SAMPLES: Sample[] = [
     label: "Bad photo (glare)",
     tag: "Spirits · real extraction",
     real: true,
+    advanced: true,
     app: {
       beverageType: "distilled-spirits",
       brandName: "OLD TOM DISTILLERY",

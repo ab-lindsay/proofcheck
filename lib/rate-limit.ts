@@ -75,7 +75,14 @@ function sweep(windowMs: number, now: number) {
   }
 }
 
-export function rateLimit(ip: string, opts: RateLimitOpts = {}): { ok: true } | { ok: false; retryAfter: number } {
+/** `cost` lets one call consume more than one slot atomically — e.g. /api/batch spends `images.length`
+ *  instead of the default 1, so a 50-image batch can no longer buy 50x the extraction budget of a
+ *  single /api/verify request for the price of one token. Denied calls consume nothing. */
+export function rateLimit(
+  ip: string,
+  opts: RateLimitOpts = {},
+  cost = 1,
+): { ok: true } | { ok: false; retryAfter: number } {
   const windowMs = opts.windowMs ?? envPositiveInt("RATE_LIMIT_WINDOW_MS", DEFAULT_WINDOW_MS);
   const max = opts.max ?? envPositiveInt("RATE_LIMIT_MAX", DEFAULT_MAX);
   const now = Date.now();
@@ -96,12 +103,12 @@ export function rateLimit(ip: string, opts: RateLimitOpts = {}): { ok: true } | 
 
   entry.timestamps = entry.timestamps.filter((t) => t > now - windowMs);
 
-  if (entry.timestamps.length >= max) {
+  if (entry.timestamps.length + cost > max) {
     const oldest = entry.timestamps[0];
     const retryAfter = Math.max(1, Math.ceil((oldest + windowMs - now) / 1000));
     return { ok: false, retryAfter };
   }
 
-  entry.timestamps.push(now);
+  for (let i = 0; i < cost; i++) entry.timestamps.push(now);
   return { ok: true };
 }

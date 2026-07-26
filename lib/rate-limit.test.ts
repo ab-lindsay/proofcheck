@@ -132,6 +132,39 @@ describe("rateLimit", () => {
     });
   });
 
+  // /api/batch extracts up to MAX_BATCH_SIZE images in one request, but a bare rateLimit(ip) call
+  // only ever consumed 1 slot regardless of image count — one token bought up to 50x the cloud-call
+  // budget of a single /api/verify request. The `cost` param closes that gap; default stays 1 so
+  // every other caller (chiefly /api/verify) is unaffected.
+  describe("weighted cost (batch amplification fix)", () => {
+    beforeEach(() => {
+      vi.stubEnv("TRUST_PROXY_HEADERS", "1");
+    });
+
+    it("consumes `cost` slots in one call instead of always 1", () => {
+      const ip = "weighted-cost";
+      expect(rateLimit(ip, { max: 10, windowMs: 1000 }, 7)).toEqual({ ok: true });
+      // 7 of 10 consumed already — 4 more would exceed the budget.
+      expect(rateLimit(ip, { max: 10, windowMs: 1000 }, 4).ok).toBe(false);
+      // But 3 more fits exactly.
+      expect(rateLimit(ip, { max: 10, windowMs: 1000 }, 3)).toEqual({ ok: true });
+    });
+
+    it("denies the whole request atomically when cost alone exceeds the remaining budget, consuming nothing", () => {
+      const ip = "weighted-cost-atomic";
+      const denied = rateLimit(ip, { max: 5, windowMs: 1000 }, 6);
+      expect(denied.ok).toBe(false);
+      // Nothing was consumed by the denied call — a full 5-cost request still fits right after.
+      expect(rateLimit(ip, { max: 5, windowMs: 1000 }, 5)).toEqual({ ok: true });
+    });
+
+    it("defaults cost to 1, preserving every existing single-request caller's behavior", () => {
+      const ip = "weighted-cost-default";
+      expect(rateLimit(ip, { max: 1, windowMs: 1000 })).toEqual({ ok: true });
+      expect(rateLimit(ip, { max: 1, windowMs: 1000 }).ok).toBe(false);
+    });
+  });
+
   // Trusted-proxy mode must not let distinct source IPs grow the clients map without bound (memory
   // DoS via IP churn): once the map is at capacity, NEW ips are lumped into the shared bucket, which
   // still rate-limits them collectively, while established entries keep their own quotas.

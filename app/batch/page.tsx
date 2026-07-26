@@ -150,7 +150,10 @@ export default function BatchPage() {
             </div>
 
             {csvErrors.length > 0 ? (
-              <div className="rounded-xl border border-verdict-non-compliant/30 bg-verdict-non-compliant-bg p-4">
+              <div
+                role="alert"
+                className="rounded-xl border border-verdict-non-compliant/30 bg-verdict-non-compliant-bg p-4"
+              >
                 <p className="mb-1 text-base font-semibold text-verdict-non-compliant">CSV problems</p>
                 <ul className="list-disc space-y-1 pl-5 text-base text-verdict-non-compliant">
                   {csvErrors.map((er, i) => (
@@ -187,7 +190,11 @@ export default function BatchPage() {
           </div>
         </section>
 
-        {items.length > 0 ? <BatchTable items={items} files={files} /> : null}
+        {items.length > 0 ? (
+          <div aria-live="polite">
+            <BatchTable items={items} files={files} />
+          </div>
+        ) : null}
       </div>
     </div>
   );
