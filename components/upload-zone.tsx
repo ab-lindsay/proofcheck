@@ -117,7 +117,7 @@ export function UploadZone({
           <p className="text-base font-medium text-muted-foreground">{file?.name}</p>
           <button
             type="button"
-            className="text-base font-medium text-ring underline underline-offset-2 hover:opacity-80"
+            className="inline-flex min-h-11 items-center px-2 text-base font-medium text-ring underline underline-offset-2 hover:opacity-80"
             onClick={() => {
               choose(null);
               clearInputs();
@@ -133,18 +133,21 @@ export function UploadZone({
           </span>
           <p className="text-xl font-medium text-foreground">Drop the label image here</p>
           <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span className="text-muted-foreground">or</span>
             <button
               type="button"
-              className="text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
+              className="inline-flex min-h-11 items-center px-2 text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
               onClick={() => inputRef.current?.click()}
             >
               Choose a file
             </button>
             <span className="hidden [@media(pointer:coarse)]:contents">
-              <span className="text-muted-foreground">or</span>
+              <span aria-hidden className="text-muted-foreground">
+                /
+              </span>
               <button
                 type="button"
-                className="inline-flex items-center gap-1 text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
+                className="inline-flex min-h-11 items-center gap-1 px-2 text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
                 onClick={() => cameraInputRef.current?.click()}
               >
                 <Camera aria-hidden className="h-4 w-4" />
