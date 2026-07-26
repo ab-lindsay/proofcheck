@@ -16,8 +16,8 @@ importers:
   .:
     dependencies:
       '@hookform/resolvers':
-        specifier: ^5.5.1
-        version: 5.5.1(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(react-hook-form@7.83.0(react@19.2.8))(zod@4.4.3)
+        specifier: ^5.5.7
+        version: 5.5.7(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(react-hook-form@7.83.0(react@19.2.8))(zod@4.4.3)
       '@vercel/analytics':
         specifier: ^2.0.1
         version: 2.0.1(next@16.2.12(@babel/core@7.29.7)(@playwright/test@1.62.0)(@types/node@24.13.3)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
@@ -473,8 +473,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@hookform/resolvers@5.5.1':
-    resolution: {integrity: sha512-OjJoswUdmOSKTojFaSLjxHyORcbNbHsmxhFNWeVHWEGVYctQaUXOqEr7GkMKEJu8yGCRvnjueAPmsY8oSBYjKw==}
+  '@hookform/resolvers@5.5.7':
+    resolution: {integrity: sha512-CyPCYV8/KlXfEXLWj8HHHhVsR/IZ6Ckm3b/a4fWtO/lRnRK1huqncb8LlAWrmpPRsse5glF5aVuDRMHEr3UGag==}
     peerDependencies:
       '@sinclair/typebox': '>=0.25.24'
       '@standard-schema/spec': ^1.0.0
@@ -497,7 +497,7 @@ packages:
       react-hook-form: ^7.55.0
       superstruct: '>=0.12.0'
       typanion: ^3.3.2
-      valibot: ^1.0.0 || ^1.0.0-beta.4 || ^1.0.0-rc
+      valibot: '>=0.31.0 || ^1.0.0-beta.4 || ^1.0.0-rc'
       vest: '>=3.0.0'
       yup: ^1.0.0
       zod: ^3.25.0 || ^4.0.0
@@ -3377,7 +3377,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@hookform/resolvers@5.5.1(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(react-hook-form@7.83.0(react@19.2.8))(zod@4.4.3)':
+  '@hookform/resolvers@5.5.7(@standard-schema/spec@1.1.0)(ajv-formats@2.1.1(ajv@8.20.0))(ajv@8.20.0)(react-hook-form@7.83.0(react@19.2.8))(zod@4.4.3)':
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.83.0(react@19.2.8)
