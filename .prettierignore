@@ -1,0 +1,19 @@
+node_modules
+.next
+out
+build
+coverage
+
+# Tooling/vendored config this repo does not author or style-own.
+.claude
+.superpowers
+.mcp.json
+.github
+pnpm-lock.yaml
+public/samples
+eval/samples
+eval/.results
+playwright-report
+test-results
+.claude/worktrees
+.worktrees

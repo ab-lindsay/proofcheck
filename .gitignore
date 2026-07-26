@@ -1,0 +1,69 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+# This project's lockfile is pnpm-lock.yaml. An accidental `npm install` leaves a
+# package-lock.json that must never be committed — two lockfiles disagreeing is how a
+# CI install silently resolves different versions than a local one.
+package-lock.json
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+/coverage*.txt
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# ProofCheck
+!.env.example
+.superpowers/
+.opencode/
+.idea/
+*.traineddata
+.worktrees/
+.claude/worktrees/
+
+# Playwright MCP / local verification artifacts
+.playwright-mcp/
+/eval/.results/
+
+# Playwright test output
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Claude Code local preview/launch config (machine-specific ports)
+.claude/launch.json
