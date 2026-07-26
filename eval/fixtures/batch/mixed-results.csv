@@ -1,0 +1,6 @@
+image_filename,beverage_type,brand_name,class_type,alcohol_content,net_contents,name_and_address,country_of_origin
+old-tom-clean.png,distilled-spirits,OLD TOM DISTILLERY,Kentucky Straight Bourbon Whiskey,45% Alc./Vol. (90 Proof),750 mL,"Old Tom Distillery Co., Bardstown, KY",
+copper-kettle-gin.png,distilled-spirits,COPPER KETTLE,Gin,47% Alc./Vol. (94 Proof),750 mL,,
+ridge-creek-table-wine.png,wine,RIDGE CREEK,Red Table Wine,,750 mL,,
+title-case-warning.png,distilled-spirits,OLD TOM DISTILLERY,Kentucky Straight Bourbon Whiskey,45% Alc./Vol. (90 Proof),750 mL,,
+wrong-abv.png,distilled-spirits,OLD TOM DISTILLERY,Kentucky Straight Bourbon Whiskey,45% Alc./Vol. (90 Proof),750 mL,,

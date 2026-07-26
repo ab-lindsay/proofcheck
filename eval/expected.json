@@ -1,0 +1,202 @@
+[
+  {
+    "file": "old-tom-clean.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null }
+  },
+  {
+    "file": "copper-kettle-gin.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "COPPER KETTLE",
+      "classType": "Gin",
+      "alcoholContent": "47% Alc./Vol. (94 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": { "overall": "APPROVED", "violation": null }
+  },
+  {
+    "file": "ridge-creek-table-wine.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "RIDGE CREEK",
+      "classType": "Red Table Wine",
+      "netContents": "750 mL"
+    },
+    "expected": { "overall": "APPROVED", "violation": null }
+  },
+  {
+    "file": "harbor-point-lager.png",
+    "application": {
+      "beverageType": "malt-beverage",
+      "brandName": "HARBOR POINT",
+      "classType": "Lager",
+      "netContents": "12 FL OZ"
+    },
+    "expected": { "overall": "APPROVED", "violation": null }
+  },
+  {
+    "file": "kirkbride-import-wine.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null }
+  },
+  {
+    "file": "stones-throw-brand-case.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "STONE'S THROW",
+      "classType": "Straight Rye Whiskey",
+      "alcoholContent": "43% Alc./Vol. (86 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "violation": { "field": "brandName", "verdictOneOf": ["NEEDS_CORRECTION"] }
+    }
+  },
+  {
+    "file": "title-case-warning.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "healthWarningStatement", "verdictOneOf": ["NON_COMPLIANT"] }
+    }
+  },
+  {
+    "file": "altered-warning.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLUE HERON",
+      "classType": "Vodka",
+      "alcoholContent": "40% Alc./Vol. (80 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "healthWarningStatement", "verdictOneOf": ["NON_COMPLIANT"] }
+    }
+  },
+  {
+    "file": "all-caps-warning.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "NORTH HARBOR",
+      "classType": "Gin",
+      "alcoholContent": "44% Alc./Vol. (88 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "violation": { "field": "healthWarningStatement", "verdictOneOf": ["NEEDS_CORRECTION"] }
+    }
+  },
+  {
+    "file": "wrong-abv.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": { "overall": "REJECTED", "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT"] } }
+  },
+  {
+    "file": "wrong-brand.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": { "overall": "REJECTED", "violation": { "field": "brandName", "verdictOneOf": ["NON_COMPLIANT"] } }
+  },
+  {
+    "file": "missing-net-contents.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "GOLDEN GATE",
+      "classType": "Gin",
+      "alcoholContent": "46% Alc./Vol. (92 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "violation": { "field": "netContents", "verdictOneOf": ["NEEDS_CORRECTION"] }
+    }
+  },
+  {
+    "file": "missing-warning.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "SILVER CREST",
+      "classType": "Vodka",
+      "alcoholContent": "40% Alc./Vol. (80 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "violation": { "field": "healthWarningStatement", "verdictOneOf": ["NEEDS_CORRECTION"] }
+    }
+  },
+  {
+    "file": "wrong-class-type.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "CASCADE VALLEY",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "40% Alc./Vol. (80 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Cascade Valley Distillery, Portland, OR"
+    },
+    "expected": { "overall": "REJECTED", "violation": { "field": "classType", "verdictOneOf": ["NON_COMPLIANT"] } }
+  },
+  {
+    "file": "wrong-net-contents.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "PACIFIC SHORE",
+      "classType": "Vodka",
+      "alcoholContent": "40% Alc./Vol. (80 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Pacific Shore Spirits Co., Seattle, WA"
+    },
+    "expected": { "overall": "REJECTED", "violation": { "field": "netContents", "verdictOneOf": ["NON_COMPLIANT"] } }
+  },
+  {
+    "file": "missing-name-and-address.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "SUMMIT PEAK",
+      "classType": "Single Malt Whiskey",
+      "alcoholContent": "46% Alc./Vol. (92 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Summit Peak Distillery, Denver, CO"
+    },
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "violation": { "field": "nameAndAddress", "verdictOneOf": ["NEEDS_CORRECTION"] }
+    }
+  }
+]

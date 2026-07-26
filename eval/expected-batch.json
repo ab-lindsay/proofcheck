@@ -1,0 +1,311 @@
+[
+  {
+    "csv": "full-batch-smoke.csv",
+    "images": [
+      "old-tom-clean.png",
+      "copper-kettle-gin.png",
+      "ridge-creek-table-wine.png",
+      "harbor-point-lager.png",
+      "kirkbride-import-wine.png"
+    ],
+    "expected": {
+      "overall": "APPROVED",
+      "parsedRows": 5,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "copper-kettle-gin.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "ridge-creek-table-wine.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "harbor-point-lager.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "kirkbride-import-wine.png",
+          "overall": "APPROVED",
+          "violation": null
+        }
+      ]
+    },
+    "tags": ["regression"]
+  },
+  {
+    "csv": "concurrency-pair.csv",
+    "images": [
+      "old-tom-clean.png",
+      "title-case-warning.png",
+      "wrong-abv.png",
+      "wrong-brand.png",
+      "missing-warning.png"
+    ],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 5,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "title-case-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "wrong-abv.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "alcoholContent",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "wrong-brand.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "brandName",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "missing-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NEEDS_CORRECTION"]
+          }
+        }
+      ]
+    },
+    "tags": ["concurrency", "regression"]
+  },
+  {
+    "csv": "missing-image.csv",
+    "images": ["old-tom-clean.png"],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 2,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "nonexistent.png",
+          "overall": "REJECTED",
+          "violation": null,
+          "expectError": true
+        }
+      ]
+    },
+    "tags": ["error-handling"]
+  },
+  {
+    "csv": "empty.csv",
+    "images": [],
+    "expected": {
+      "overall": "APPROVED",
+      "parsedRows": 0,
+      "rows": []
+    },
+    "tags": ["csv-parsing"]
+  },
+  {
+    "csv": "duplicate-filenames.csv",
+    "images": ["old-tom-clean.png"],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 1,
+      "parseErrors": ["duplicate image_filename"],
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        }
+      ]
+    },
+    "tags": ["csv-parsing"]
+  },
+  {
+    "csv": "missing-brand.csv",
+    "images": ["old-tom-clean.png"],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 0,
+      "parseErrors": ["missing required columns: brand_name"],
+      "rows": []
+    },
+    "tags": ["csv-parsing"]
+  },
+  {
+    "csv": "mixed-results.csv",
+    "images": [
+      "old-tom-clean.png",
+      "copper-kettle-gin.png",
+      "ridge-creek-table-wine.png",
+      "title-case-warning.png",
+      "wrong-abv.png"
+    ],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 5,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "copper-kettle-gin.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "ridge-creek-table-wine.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "title-case-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "wrong-abv.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "alcoholContent",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        }
+      ]
+    },
+    "tags": ["error-handling", "regression"]
+  },
+  {
+    "csv": "large-batch.csv",
+    "images": [
+      "old-tom-clean.png",
+      "copper-kettle-gin.png",
+      "ridge-creek-table-wine.png",
+      "harbor-point-lager.png",
+      "kirkbride-import-wine.png",
+      "title-case-warning.png",
+      "altered-warning.png",
+      "all-caps-warning.png",
+      "missing-net-contents.png",
+      "missing-warning.png"
+    ],
+    "expected": {
+      "overall": "REJECTED",
+      "parsedRows": 10,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "copper-kettle-gin.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "ridge-creek-table-wine.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "harbor-point-lager.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "kirkbride-import-wine.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "title-case-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "altered-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NON_COMPLIANT"]
+          }
+        },
+        {
+          "filename": "all-caps-warning.png",
+          "overall": "REJECTED",
+          "violation": null
+        },
+        {
+          "filename": "missing-net-contents.png",
+          "overall": "REJECTED",
+          "violation": null
+        },
+        {
+          "filename": "missing-warning.png",
+          "overall": "REJECTED",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NEEDS_CORRECTION"]
+          }
+        }
+      ]
+    },
+    "tags": ["regression"]
+  },
+  {
+    "csv": "needs-correction-batch.csv",
+    "images": ["old-tom-clean.png", "all-caps-warning.png"],
+    "expected": {
+      "overall": "NEEDS_CORRECTION",
+      "parsedRows": 2,
+      "rows": [
+        {
+          "filename": "old-tom-clean.png",
+          "overall": "APPROVED",
+          "violation": null
+        },
+        {
+          "filename": "all-caps-warning.png",
+          "overall": "NEEDS_CORRECTION",
+          "violation": {
+            "field": "healthWarningStatement",
+            "verdictOneOf": ["NEEDS_CORRECTION"]
+          }
+        }
+      ]
+    },
+    "tags": ["regression"]
+  }
+]

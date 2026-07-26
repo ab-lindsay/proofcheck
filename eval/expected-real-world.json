@@ -1,0 +1,615 @@
+[
+  {
+    "file": "spirits-old-tub-bourbon-front.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-old-tub-bourbon-back.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-titos-handmade-vodka-front.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Tito's Handmade",
+      "classType": "Vodka",
+      "alcoholContent": "40% Alc./Vol.",
+      "netContents": "1L",
+      "nameAndAddress": "Fifth Generation, Inc., Austin, TX"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-titos-handmade-vodka-back.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Tito's Handmade",
+      "classType": "Vodka",
+      "alcoholContent": "40% Alc./Vol.",
+      "netContents": "1L",
+      "nameAndAddress": "Fifth Generation, Inc., Austin, TX"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-buffalo-trace-experimental-front.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Buffalo Trace",
+      "classType": "Straight Bourbon Whiskey (Made with Peated Malt)",
+      "alcoholContent": "45% Alc/Vol (90 Proof)",
+      "netContents": "375 mL",
+      "nameAndAddress": "Buffalo Trace Distillery Inc, Frankfort, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-buffalo-trace-experimental-back.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Buffalo Trace",
+      "classType": "Straight Bourbon Whiskey (Made with Peated Malt)",
+      "alcoholContent": "45% Alc/Vol (90 Proof)",
+      "netContents": "375 mL",
+      "nameAndAddress": "Buffalo Trace Distillery Inc, Frankfort, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-makers-mark-founders-series-front.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Maker's Mark",
+      "classType": "Kentucky Straight Bourbon Whisky",
+      "alcoholContent": "45% Alc/Vol",
+      "netContents": "1 Liter",
+      "nameAndAddress": "The Maker's Mark Distillery, Inc., Star Hill Farm, Loretto, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "spirits-makers-mark-founders-series-back.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "Maker's Mark",
+      "classType": "Kentucky Straight Bourbon Whisky",
+      "alcoholContent": "45% Alc/Vol",
+      "netContents": "1 Liter",
+      "nameAndAddress": "The Maker's Mark Distillery, Inc., Star Hill Farm, Loretto, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-kendall-jackson-vintners-reserve-rose-front.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "Kendall-Jackson Vintner's Reserve",
+      "classType": "Rosé Wine",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "Kendall-Jackson Vineyards & Winery, Santa Rosa, CA"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-kendall-jackson-vintners-reserve-rose-back.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "Kendall-Jackson Vintner's Reserve",
+      "classType": "Rosé Wine",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "Kendall-Jackson Vineyards & Winery, Santa Rosa, CA"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-chateau-ste-michelle-grenache-blanc-front.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "Chateau Ste Michelle",
+      "classType": "Grenache Blanc",
+      "alcoholContent": "13.5% Alc by Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "Chateau Ste. Michelle, Woodinville, WA"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-chateau-ste-michelle-grenache-blanc-back.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "Chateau Ste Michelle",
+      "classType": "Grenache Blanc",
+      "alcoholContent": "13.5% Alc by Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "Chateau Ste. Michelle, Woodinville, WA"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-la-crema-saralees-chardonnay-front.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-la-crema-saralees-chardonnay-back.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "malt-sierra-nevada-oktoberfest-can.jpg",
+    "application": {
+      "beverageType": "malt-beverage",
+      "brandName": "Sierra Nevada Oktoberfest",
+      "classType": "Marzen-Style Amber Lager",
+      "alcoholContent": "5.5% ABV",
+      "netContents": "12 FL OZ",
+      "nameAndAddress": "Sierra Nevada Brewing Co., Chico, CA & Mills River, NC"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "malt-samuel-adams-boston-lager-can.jpg",
+    "application": {
+      "beverageType": "malt-beverage",
+      "brandName": "Samuel Adams Boston Lager",
+      "classType": "Lager",
+      "alcoholContent": "5.0% Alc./Vol.",
+      "netContents": "12 FL OZ",
+      "nameAndAddress": "The Boston Beer Co., Boston, MA / Breinigsville, PA / Cincinnati, OH"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "malt-guinness-draught-stout-can.jpg",
+    "application": {
+      "beverageType": "malt-beverage",
+      "brandName": "Guinness",
+      "classType": "Draught Stout",
+      "alcoholContent": "4.1% Alc./Vol.",
+      "netContents": "14.9 FL OZ",
+      "nameAndAddress": "Guinness & Co., St. James's Gate, Dublin, Ireland; imported by Diageo Beer Company USA, New York, NY",
+      "countryOfOrigin": "Ireland"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/old-tom-clean-blur.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/old-tom-clean-skew.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/old-tom-clean-glare.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/old-tom-clean-lowres.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/old-tom-clean-combo.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TOM DISTILLERY",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL",
+      "nameAndAddress": "Old Tom Distillery Co., Bardstown, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/kirkbride-import-wine-blur.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/kirkbride-import-wine-skew.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/kirkbride-import-wine-glare.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/kirkbride-import-wine-lowres.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/kirkbride-import-wine-combo.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "KIRKBRIDE CELLARS",
+      "classType": "White Wine",
+      "alcoholContent": "13.5% Alc./Vol.",
+      "netContents": "750 mL",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wrong-abv-blur.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT", "NEEDS_CORRECTION"] }
+    },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wrong-abv-skew.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT", "NEEDS_CORRECTION"] }
+    },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wrong-abv-glare.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT", "NEEDS_CORRECTION"] }
+    },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wrong-abv-lowres.png",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT", "NEEDS_CORRECTION"] }
+    },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wrong-abv-combo.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "BLACK RIVER",
+      "classType": "Straight Bourbon Whiskey",
+      "alcoholContent": "45% Alc./Vol. (90 Proof)",
+      "netContents": "750 mL"
+    },
+    "expected": {
+      "overall": "REJECTED",
+      "violation": { "field": "alcoholContent", "verdictOneOf": ["NON_COMPLIANT", "NEEDS_CORRECTION"] }
+    },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/spirits-old-tub-bourbon-back-blur.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/spirits-old-tub-bourbon-back-skew.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/spirits-old-tub-bourbon-back-glare.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/spirits-old-tub-bourbon-back-lowres.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/spirits-old-tub-bourbon-back-combo.jpg",
+    "application": {
+      "beverageType": "distilled-spirits",
+      "brandName": "OLD TUB",
+      "classType": "Kentucky Straight Bourbon Whiskey",
+      "alcoholContent": "50% Alc./Vol. 100 Proof",
+      "netContents": "750 mL",
+      "nameAndAddress": "James B. Beam Distilling Co., Clermont, KY"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wine-la-crema-saralees-chardonnay-back-blur.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wine-la-crema-saralees-chardonnay-back-skew.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wine-la-crema-saralees-chardonnay-back-glare.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wine-la-crema-saralees-chardonnay-back-lowres.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "degraded/wine-la-crema-saralees-chardonnay-back-combo.jpg",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "La Crema Saralee's Vineyard",
+      "classType": "Chardonnay",
+      "alcoholContent": "13.5% Alc/Vol",
+      "netContents": "750 mL",
+      "nameAndAddress": "La Crema, Windsor, California"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-french-cotes-du-rhone.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "DOMAINE LAURENT",
+      "classType": "Côtes du Rhône Rouge",
+      "alcoholContent": "13.5% Vol.",
+      "netContents": "750 mL",
+      "nameAndAddress": "Domaine Laurent, Vaison-la-Romaine",
+      "countryOfOrigin": "France"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-spanish-rioja.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "BODEGA MONTALVO",
+      "classType": "Rioja Tinto",
+      "alcoholContent": "13.5% Vol.",
+      "netContents": "750 mL",
+      "nameAndAddress": "Bodega Montalvo, Haro",
+      "countryOfOrigin": "España"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-italian-chianti.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "TENUTA ROSSINI",
+      "classType": "Chianti Rosso",
+      "alcoholContent": "13% Vol.",
+      "netContents": "750 mL",
+      "nameAndAddress": "Tenuta Rossini, Siena",
+      "countryOfOrigin": "Italia"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  },
+  {
+    "file": "wine-portuguese-vinho-verde.png",
+    "application": {
+      "beverageType": "wine",
+      "brandName": "QUINTA DO VALE",
+      "classType": "Vinho Verde Branco",
+      "alcoholContent": "11% Vol.",
+      "netContents": "750 mL",
+      "nameAndAddress": "Quinta do Vale, Porto",
+      "countryOfOrigin": "Portugal"
+    },
+    "expected": { "overall": "APPROVED", "violation": null },
+    "tolerant": true
+  }
+]
