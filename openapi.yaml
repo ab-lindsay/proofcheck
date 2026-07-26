@@ -1,0 +1,331 @@
+openapi: 3.1.0
+info:
+  title: ProofCheck API
+  description: AI-assisted TTB alcohol label verification
+  version: 1.0.0
+
+paths:
+  /api/verify:
+    get:
+      summary: Check cloud tier availability
+      operationId: getCloudAvailability
+      responses:
+        "200":
+          description: Cloud provider status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cloudAvailable:
+                    type: boolean
+                    description: Whether a cloud vision provider is configured
+
+    post:
+      summary: Verify a beverage label against application data
+      operationId: verifyLabel
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image
+                - application
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Label image (PNG, JPEG, or WebP, max 8 MB)
+                application:
+                  type: string
+                  description: JSON-encoded application data
+                source:
+                  type: string
+                  description: Set to "sample" for bundled demo images
+                devTier:
+                  type: string
+                  enum: [auto, local-ocr, local-llm, cloud]
+                  description: Override extraction tier (dev mode)
+                escalate:
+                  type: string
+                  description: Set to "1" to enable escalation ladder
+                devBedrockModel:
+                  type: string
+                  enum: [haiku, opus]
+                  description: Override Bedrock model (dev mode)
+
+      responses:
+        "200":
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationResult"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "413":
+          description: Image too large
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "502":
+          description: Extraction failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "504":
+          description: Verification timed out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/batch:
+    post:
+      summary: Verify up to 50 labels in one request
+      description: >-
+        Verifies many labels concurrently. Fails per item, never per batch: an image that is
+        rejected or cannot be extracted comes back as a result row carrying `error`, alongside the
+        rows that succeeded, still inside a 200. A 4xx is returned only when the request as a whole
+        is unusable. `results` is always in the same order as the submitted `images`, one row per
+        image — pair rows by position, not by `filename`, which a batch may legitimately repeat.
+      operationId: verifyLabelBatch
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - images
+                - applications
+              properties:
+                images:
+                  type: array
+                  minItems: 1
+                  maxItems: 50
+                  items:
+                    type: string
+                    format: binary
+                  description: Label images (PNG, JPEG, or WebP, max 8 MB and 25 megapixels each)
+                applications:
+                  type: string
+                  description: >-
+                    JSON-encoded array of ApplicationData, one entry per image in the same order.
+                    The array length must equal the number of images.
+                source:
+                  type: string
+                  description: Set to "sample" for bundled demo images
+                devTier:
+                  type: string
+                  enum: [auto, local-ocr, local-llm, cloud]
+                  description: Override extraction tier (dev mode)
+                escalate:
+                  type: string
+                  description: Set to "1" to enable escalation ladder
+                devBedrockModel:
+                  type: string
+                  enum: [haiku, opus]
+                  description: Override Bedrock model (dev mode)
+
+      responses:
+        "200":
+          description: >-
+            Batch results. Individual rows may carry `error`; that does not make the response a
+            failure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BatchResponse"
+        "400":
+          description: >-
+            Request unusable as a whole — images or applications missing, the two counts disagree,
+            applications is not valid JSON, or more than 50 images were submitted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "413":
+          description: >-
+            The whole request exceeds 100 MB. Note that a maximal batch of 50 images at 8 MB each
+            would be 400 MB, so a full-size batch cannot be sent as a single request — chunk it into
+            several. Hosting platforms commonly reject bodies over 100 MB before this endpoint is
+            reached, in which case the response comes from the platform rather than from here.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    ApplicationData:
+      type: object
+      required:
+        - beverageType
+        - brandName
+        - classType
+        - netContents
+      properties:
+        beverageType:
+          type: string
+          enum: [distilled-spirits, wine, malt-beverage]
+        brandName:
+          type: string
+          minLength: 1
+        classType:
+          type: string
+          minLength: 1
+        alcoholContent:
+          type: string
+        netContents:
+          type: string
+          minLength: 1
+        nameAndAddress:
+          type: string
+        countryOfOrigin:
+          type: string
+
+    FieldResult:
+      type: object
+      properties:
+        field:
+          type: string
+          description: Field name
+        applicationValue:
+          type: string
+          nullable: true
+          description: Value from the application
+        labelValue:
+          type: string
+          nullable: true
+          description: Value extracted from the label
+        verdict:
+          type: string
+          enum: [COMPLIANT, NON_COMPLIANT, NEEDS_CORRECTION]
+        reason:
+          type: string
+          description: Plain-English explanation
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Extraction confidence
+
+    VerificationResult:
+      type: object
+      properties:
+        overall:
+          type: string
+          enum: [APPROVED, NEEDS_CORRECTION, REJECTED]
+          description: >-
+            REJECTED iff any field is NON_COMPLIANT, else NEEDS_CORRECTION iff any field needs one,
+            else APPROVED
+        fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldResult"
+        warnings:
+          type: array
+          items:
+            type: string
+        processingMs:
+          type: number
+          description: Processing time in milliseconds
+        tier:
+          type: string
+          description: Extraction tier used (mock, local-ocr, local-llm, cloud)
+        provider:
+          type: string
+          description: Provider name (e.g., bedrock, local-ocr, mock)
+        beverageType:
+          type: string
+          enum: [distilled-spirits, wine, malt-beverage]
+        extraction:
+          type: object
+          description: Raw extraction trace
+
+    BatchRowResult:
+      type: object
+      description: >-
+        One image's outcome. Mirrors VerificationResult plus the row's `filename` and an optional
+        `error`. Rows that could not be processed report overall NEEDS_CORRECTION with tier,
+        provider, and beverageType as "unknown" and carry `error` with the plain-English reason.
+      required:
+        - filename
+        - overall
+        - fields
+        - warnings
+        - processingMs
+        - tier
+        - provider
+        - beverageType
+      properties:
+        filename:
+          type: string
+          description: The submitted image's filename. Not unique within a batch — pair rows by position.
+        overall:
+          type: string
+          enum: [APPROVED, NEEDS_CORRECTION, REJECTED]
+          description: >-
+            REJECTED iff any field is NON_COMPLIANT, else NEEDS_CORRECTION iff any field needs one,
+            else APPROVED. A row that could not be examined at all (bad input, decode failure,
+            timeout) is NEEDS_CORRECTION with `error` set — never REJECTED, which would assert a
+            regulatory finding on a label that was never read.
+        fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldResult"
+          description: Empty for a row that never reached extraction
+        warnings:
+          type: array
+          items:
+            type: string
+        processingMs:
+          type: number
+        tier:
+          type: string
+          description: Extraction tier used (mock, local-ocr, local-llm, cloud), or "unknown" if the row errored
+        provider:
+          type: string
+          description: Provider name, or "unknown" if the row errored
+        beverageType:
+          type: string
+          enum: [distilled-spirits, wine, malt-beverage, unknown]
+        error:
+          type: string
+          description: Present only when this row failed. Its presence does not fail the batch.
+
+    BatchResponse:
+      type: object
+      required:
+        - results
+        - totalMs
+      properties:
+        results:
+          type: array
+          description: One row per submitted image, in submission order
+          items:
+            $ref: "#/components/schemas/BatchRowResult"
+        totalMs:
+          type: number
+          description: Wall-clock time for the whole batch
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
