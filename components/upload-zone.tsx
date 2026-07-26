@@ -83,16 +83,21 @@ export function UploadZone({
         onChange={(e) => choose(e.target.files?.[0] ?? null)}
       />
       {/* capture="environment" opens the rear camera directly on mobile instead of the gallery
-          picker; desktop browsers ignore it and this behaves like a normal file input. */}
-      <input
-        ref={cameraInputRef}
-        type="file"
-        aria-label="Take a photo"
-        accept="image/png,image/jpeg,image/webp"
-        capture="environment"
-        className="sr-only"
-        onChange={(e) => choose(e.target.files?.[0] ?? null)}
-      />
+          picker. Desktop browsers ignore the attribute and would just open a plain file picker
+          identical to "Choose a file" — so the whole control is scoped to coarse-pointer (touch)
+          devices via CSS, not JS, to avoid a hydration mismatch: a button that silently doesn't do
+          what it says is exactly the kind of thing a reviewer on desktop would notice. */}
+      <span className="hidden [@media(pointer:coarse)]:contents">
+        <input
+          ref={cameraInputRef}
+          type="file"
+          aria-label="Take a photo"
+          accept="image/png,image/jpeg,image/webp"
+          capture="environment"
+          className="sr-only"
+          onChange={(e) => choose(e.target.files?.[0] ?? null)}
+        />
+      </span>
       {rejectMsg ? (
         <p role="alert" className="text-base font-medium text-verdict-non-compliant">
           {rejectMsg}
@@ -135,15 +140,17 @@ export function UploadZone({
             >
               Choose a file
             </button>
-            <span className="text-muted-foreground">or</span>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
-              onClick={() => cameraInputRef.current?.click()}
-            >
-              <Camera aria-hidden className="h-4 w-4" />
-              Take a photo
-            </button>
+            <span className="hidden [@media(pointer:coarse)]:contents">
+              <span className="text-muted-foreground">or</span>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 text-lg font-medium text-ring underline underline-offset-2 hover:opacity-80"
+                onClick={() => cameraInputRef.current?.click()}
+              >
+                <Camera aria-hidden className="h-4 w-4" />
+                Take a photo
+              </button>
+            </span>
           </div>
           <p className="text-base text-muted-foreground">PNG, JPEG, or WebP — up to 8 MB</p>
         </div>

@@ -12,6 +12,13 @@ warning violation, or **"Bad photo (glare)"**, which skips the canned demo path 
 the live extraction pipeline on a degraded capture. Each sample pre-fills its application values;
 press **Verify label**.
 
+**On a phone, you can photograph the label directly** — the upload zone exposes a "Take a photo"
+control (`<input capture="environment">`) alongside the regular file picker, opening the device's
+camera straight to the rear lens rather than the photo gallery. This only appears on touch/coarse-
+pointer devices (`@media (pointer: coarse)`): on desktop, where `capture` is ignored by the browser
+and the control would silently behave like a second, redundant file picker, it's hidden rather than
+shown-but-non-functional.
+
 **For reviewers:** See `REVIEWER_SUMMARY.md` for key technical decisions and brief alignment.
 
 ## How it works

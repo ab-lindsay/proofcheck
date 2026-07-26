@@ -63,6 +63,8 @@ For this review deployment: `RATE_LIMIT_MAX` was raised via env var (not a code 
 
 ✅ **Batch uploads:** CSV template + multi-file select, per-row error handling (one bad label never blocks the batch), results export. Real-time progress updates for large batches.
 
+✅ **Field capture (value-add, not an explicit brief line):** on mobile, "Take a photo" opens the rear camera directly instead of the gallery picker — a plausible real-world path for an agent photographing a label on-site rather than uploading an existing file. Scoped to touch devices via CSS (`pointer: coarse`); hidden on desktop, where the underlying `capture` attribute is ignored by the browser and would otherwise sit next to "Choose a file" doing the exact same thing under a misleading label.
+
 ## Known Limitations (Documented)
 
 - **Prototype scope:** standalone, no COLAs Online integration, no auth, ephemeral processing (per the brief).
