@@ -1,0 +1,15 @@
+<!--
+  ProofCheck mark, favicon variant. Two unequal bottom-aligned columns (the application data and
+  the extracted label) with one field tied across them in amber.
+
+  Geometry is identical to components/proof-mark.tsx and the SHAPES constant in
+  scripts/generate-favicon.ts — the glyph spans 70% x 80% of the tile in all three. Keep them in
+  sync. See docs/superpowers/specs/2026-07-25-logo-mark-design.md.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="ProofCheck">
+  <title>ProofCheck</title>
+  <rect width="40" height="40" rx="6" fill="#142c46"/>
+  <rect x="6" y="4" width="9.5" height="32" rx="2.5" fill="#faf8f3"/>
+  <rect x="24.5" y="13" width="9.5" height="23" rx="2.5" fill="#faf8f3"/>
+  <rect x="6" y="24" width="28" height="6.5" rx="3.25" fill="#e08a3e"/>
+</svg>
