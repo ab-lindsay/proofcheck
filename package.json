@@ -50,7 +50,7 @@
     "audit": "pnpm audit --audit-level=high"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.5.1",
+    "@hookform/resolvers": "^5.5.7",
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.27.0",
     "next": "16.2.12",
